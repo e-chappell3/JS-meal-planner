@@ -1,0 +1,20 @@
+:root{
+    --green: #c2d368;
+    --darkGreen: #4e584a;
+    --cyan: #567b79;
+    --brown: #a77b5b;
+    --darkBrown: #80493a;
+    --gray: #45444f;
+    --blue: #3a3858;
+    --cream: #f2f0e5;
+    --peach: #e5ceb4;
+}
+
+
+h1 {
+    color:#4e584a;
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}

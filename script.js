@@ -70,11 +70,15 @@ function createIngredElement (ingredient){
     const listItem  = document.createElement('li');
     listItem.textContent = ingredient;
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    listItem.appendChild(deleteButton);
+    
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.name = "name";
+    checkbox.value = "value";
+    checkbox.id = "id";
+    listItem.appendChild(checkbox);
 
-    deleteButton.addEventListener('click', function(){
+    checkbox.addEventListener('click', function(){
         ingredientList.removeChild(listItem);
         saveIngredient();
     })
