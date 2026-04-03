@@ -29,7 +29,8 @@ function createIngredElement (ingredient){
     listItem.appendChild(deleteButton);
 
     deleteButton.addEventListener('click', function(){
-        taskList.removeChild(listItem);
+        ingredientList.removeChild(listItem);
+        saveIngredient();
     })
 
     ingredientList.appendChild(listItem);
@@ -38,7 +39,7 @@ function createIngredElement (ingredient){
 function saveIngredient(){
     let ingredients = [];
     ingredientList.querySelectorAll('li').forEach(function(item){
-        ingredients.push(item.textContent);
+        ingredients.push(item.textContent.replace('Delete', ''));
     });
 
     localStorage.setItem('ingredients', JSON.stringify(ingredients));
