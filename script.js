@@ -1,26 +1,17 @@
 function Ingredient(name, price, isOwned){
     this.name = name;
-    this.price = price;
     this.isOwned = isOwned;
 }
 
 function Recipe(ingreds){
     this.ingreds = ingreds;
-    let cost = 0;
-    let totalCost = 0 + ingreds.forEach(sum);
     let required = setMake(required);
-    cost = 0;
-    let reqCost = 0 + required.forEach(sum);
     if (required.length == 0){
         let canMake = true;
     }
     else{
         let canMake = false;
     }
-}
-
-function sum(num){
-    cost += num;
 }
 
 function setMake(required){
@@ -45,17 +36,26 @@ function setMake(required){
     return required;
 }
 
-const addButton = document.getElementById('addIngredient');
+const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const ingredientList = document.getElementById('ingredientList');
 
+const fridgeButton = document.getElementById("fridgeBox");
+const noteButton = document.getElementById("noteBox");
+const ovenButton = document.getElementById("ovenBox");
+
 loadIngredients();
 addButton.addEventListener('click', addIngredient);
+fridgeButton.addEventListener('click', fridgeView);
+
+function fridgeView(){
+    loadIngredients();
+}
 
 function addIngredient(){
-    const ingredient = ingredientInput.value;
-    if (ingredient){
-        createIngredElement(ingredient);
+    const i = ingredientInput.value;
+    if (ingredientInput.value){
+        createIngredElement(i);
         ingredientInput.value = '';
 
         saveIngredient();
@@ -66,10 +66,11 @@ function addIngredient(){
 
 }
 
-function createIngredElement (ingredient){
+function createIngredElement (i){
+    // need to figure out how li works to load ingredient object not just name
+    // current error: ingredient displays but lost when trying to reload
     const listItem  = document.createElement('li');
-    listItem.textContent = ingredient;
-
+    listItem.textContent = i;
     
     let checkbox = document.createElement('input');
     checkbox.type = "checkbox";
@@ -90,6 +91,7 @@ function saveIngredient(){
     let ingredients = [];
     ingredientList.querySelectorAll('li').forEach(function(item){
         ingredients.push(item.textContent.replace('Delete', ''));
+        ingredients.push(item.isOwned);
     });
 
     localStorage.setItem('ingredients', JSON.stringify(ingredients));

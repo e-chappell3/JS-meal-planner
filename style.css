@@ -12,9 +12,87 @@
 
 
 h1 {
-    color:#4e584a;
+    color:var(--darkGreen);
     font-family: "Pixelify Sans", sans-serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
+    text-align: center;
+}
+
+body{
+    .container {
+    position: relative;
+    width: 50%;
+    }
+
+    .container .fridge {
+    position: absolute;
+    top: 170%;
+    left: 20%;
+    transform: translate(-20%, 70%);
+    -ms-transform: translate(-20%, 70%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 50px 80px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    }
+
+    .container .note {
+    position: absolute;
+    top: 220%;
+    left: 20%;
+    transform: translate(-20%, 120%);
+    -ms-transform: translate(-20%, 120%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 50px 80px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    }
+
+    .container .oven {
+    position: absolute;
+    top: 200%;
+    left: 100%;
+    transform: translate(-100%, 100%);
+    -ms-transform: translate(-100%, 100%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 70px 90px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    }
+
+
+    .container img {
+    /* Set rules to fill background */
+    min-height: 100%;
+    min-width: 1024px;
+        
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+        
+    /* Set up positioning */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    }
+
+    @media screen and (max-width: 2048px) {
+    img.bg {
+        left: 50%;
+        margin-left: -512px;   /* 50% */
+    }
+    }
+
 }
