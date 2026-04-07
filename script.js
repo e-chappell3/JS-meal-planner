@@ -1,4 +1,4 @@
-function Ingredient(name, price, isOwned){
+function Ingredient(name, isOwned){
     this.name = name;
     this.isOwned = isOwned;
 }
@@ -39,6 +39,7 @@ function setMake(required){
 const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const ingredientList = document.getElementById('ingredientList');
+const ownedList = document.getElementById('ownedList');
 
 const fridgeButton = document.getElementById("fridgeBox");
 const noteButton = document.getElementById("noteBox");
@@ -65,7 +66,7 @@ function ovenView(){
 function addIngredient(){
     const i = ingredientInput.value;
     if (ingredientInput.value){
-        createIngredElement(i);
+        createIngredElement(i, false);
         ingredientInput.value = '';
 
         saveIngredient();
@@ -76,32 +77,33 @@ function addIngredient(){
 
 }
 
-function createIngredElement (i){
-    // need to figure out how li works to load ingredient object not just name
-    // current error: ingredient displays but lost when trying to reload
-    const listItem  = document.createElement('li');
-    listItem.textContent = i;
+function createIngredElement (i, owned){
+    const ingredItem  = document.createElement('li');
+    ingredItem.textContent = i;
+    const ownedItem  = document.createElement('li');
+    ownedItem.textContent = owned;
     
-    let checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.name = "name";
-    checkbox.value = "value";
-    checkbox.id = "id";
-    listItem.appendChild(checkbox);
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteTask';
 
-    checkbox.addEventListener('click', function(){
-        ingredientList.removeChild(listItem);
+    ingredItem.appendChild(deleteButton);
+
+    deleteButton.addEventListener('click', function(){
+        ingredientList.removeChild(ingredItem);
         saveIngredient();
     })
 
-    ingredientList.appendChild(listItem);
+    ingredientList.appendChild(ingredItem);
+    ownedList.appendChild(ownedItem);
 }
 
 function saveIngredient(){
     let ingredients = [];
     ingredientList.querySelectorAll('li').forEach(function(item){
         ingredients.push(item.textContent.replace('Delete', ''));
-        ingredients.push(item.isOwned);
+        let arr = Array.from(ingredientList);
+        ingredients.push(ownedList[arr.indexOf(item)]);
     });
 
     localStorage.setItem('ingredients', JSON.stringify(ingredients));
@@ -109,5 +111,8 @@ function saveIngredient(){
 
 function loadIngredients(){
     const ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-    ingredients.forEach(createIngredElement);
+
+    for (let i = 0; i < ingredients.length/2; i++){
+        createIngredElement(ingredients[i], ingredients[i+1]);
+    }
 }

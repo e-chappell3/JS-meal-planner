@@ -28,10 +28,10 @@ body{
 
     .container .fridge {
     position: absolute;
-    top: 170%;
+    top: 210%;
     left: 20%;
-    transform: translate(-20%, 70%);
-    -ms-transform: translate(-20%, 70%);
+    transform: translate(-20%, 110%);
+    -ms-transform: translate(-20%, 110%);
     background-color: #555;
     color: white;
     font-size: 16px;
@@ -43,14 +43,14 @@ body{
 
     .container .note {
     position: absolute;
-    top: 220%;
+    top: 230%;
     left: 20%;
-    transform: translate(-20%, 120%);
-    -ms-transform: translate(-20%, 120%);
+    transform: translate(-20%, 130%);
+    -ms-transform: translate(-20%, 130%);
     background-color: #555;
     color: white;
     font-size: 16px;
-    padding: 50px 80px;
+    padding: 80px 80px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -58,10 +58,10 @@ body{
 
     .container .oven {
     position: absolute;
-    top: 200%;
+    top: 240%;
     left: 100%;
-    transform: translate(-100%, 100%);
-    -ms-transform: translate(-100%, 100%);
+    transform: translate(-100%, 140%);
+    -ms-transform: translate(-100%, 140%);
     background-color: #555;
     color: white;
     font-size: 16px;
