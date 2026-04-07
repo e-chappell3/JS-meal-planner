@@ -47,9 +47,19 @@ const ovenButton = document.getElementById("ovenBox");
 loadIngredients();
 addButton.addEventListener('click', addIngredient);
 fridgeButton.addEventListener('click', fridgeView);
+noteButton.addEventListener('click', listView);
+ovenButton.addEventListener('click', ovenView);
 
 function fridgeView(){
-    loadIngredients();
+    document.location.href = "fridge.html";
+}
+
+function listView(){
+    document.location.href = "list.html";
+}
+
+function ovenView(){
+    document.location.href = "oven.html";
 }
 
 function addIngredient(){
