@@ -51,15 +51,15 @@ noteButton.addEventListener('click', listView);
 ovenButton.addEventListener('click', ovenView);
 
 function fridgeView(){
-    document.location.href = "fridge.html";
+    document.location.href = "https://e-chappell3.github.io/meal-planner/fridge";
 }
 
 function listView(){
-    document.location.href = "list.html";
+    document.location.href = "https://e-chappell3.github.io/meal-planner/list";
 }
 
 function ovenView(){
-    document.location.href = "oven.html";
+    document.location.href = "https://e-chappell3.github.io/meal-planner/oven";
 }
 
 function addIngredient(){
