@@ -1,8 +1,3 @@
-function Ingredient(name, isOwned){
-    this.name = name;
-    this.isOwned = isOwned;
-}
-
 function Recipe(ingreds){
     this.ingreds = ingreds;
     let required = setMake(required);
@@ -38,8 +33,8 @@ function setMake(required){
 
 const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
-const ingredientList = document.getElementById('ingredientList');
-const ownedList = document.getElementById('ownedList');
+const displayList = document.getElementById('ingredientList');
+const ingredList = [];
 
 const fridgeButton = document.getElementById("fridgeBox");
 const noteButton = document.getElementById("noteBox");
@@ -66,7 +61,7 @@ function ovenView(){
 function addIngredient(){
     const i = ingredientInput.value;
     if (ingredientInput.value){
-        createIngredElement(i, false);
+        createIngredElement(i, false, 0);
         ingredientInput.value = '';
 
         saveIngredient();
@@ -77,11 +72,18 @@ function addIngredient(){
 
 }
 
-function createIngredElement (i, owned){
-    const ingredItem  = document.createElement('li');
-    ingredItem.textContent = i;
-    const ownedItem  = document.createElement('li');
-    ownedItem.textContent = owned;
+function createIngredElement (i, owned, d){
+    if (d == 0){
+        d = Date.now() + Math.random();
+    }
+    const item = {
+        text: i,
+        own: owned,
+        id: d
+    };
+    const ingredItem = document.createElement('li');
+    ingredItem.textContent = item.text;
+    ingredList.push(item);
     
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -90,29 +92,29 @@ function createIngredElement (i, owned){
     ingredItem.appendChild(deleteButton);
 
     deleteButton.addEventListener('click', function(){
-        ingredientList.removeChild(ingredItem);
+        displayList.removeChild(ingredItem);
+        const index = ingredList.findIndex(i => i.id === item.id);
+        if (index > -1){
+            ingredList.splice(index, 1)
+        }
         saveIngredient();
     })
 
-    ingredientList.appendChild(ingredItem);
-    ownedList.appendChild(ownedItem);
+    displayList.appendChild(ingredItem);
 }
 
 function saveIngredient(){
-    let ingredients = [];
-    ingredientList.querySelectorAll('li').forEach(function(item){
-        ingredients.push(item.textContent.replace('Delete', ''));
-        let arr = Array.from(ingredientList);
-        ingredients.push(ownedList[arr.indexOf(item)]);
-    });
-
-    localStorage.setItem('ingredients', JSON.stringify(ingredients));
+    console.log("Saving: ", ingredList);
+    localStorage.setItem('ingredList', JSON.stringify(ingredList));
 }
 
 function loadIngredients(){
-    const ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-
-    for (let i = 0; i < ingredients.length/2; i++){
-        createIngredElement(ingredients[i], ingredients[i+1]);
-    }
+    const ingredients = JSON.parse(localStorage.getItem('ingredList') || "[]");
+    console.log("Retrieving: ",ingredients);
+    ingredients.forEach(item => {
+        if(item){
+            createIngredElement(item.text, item.own, item.id);
+        }
+        
+    });
 }
