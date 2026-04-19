@@ -37,9 +37,9 @@ const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
 const ingredList = [];
 
-const fridgeButton = document.getElementById("fridgeBox");
-const noteButton = document.getElementById("noteBox");
-const ovenButton = document.getElementById("ovenBox");
+const fridgeButton = document.getElementById("fridgeButton");
+const noteButton = document.getElementById("noteButton");
+const ovenButton = document.getElementById("ovenButton");
 
 loadIngredients();
 addButton.addEventListener('click', addIngredient);
