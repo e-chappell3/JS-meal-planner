@@ -82,9 +82,11 @@ function createIngredElement (i, owned, d){
         own: owned,
         id: d
     };
+    ingredList.push(item);
     const ingredItem = document.createElement('li');
     ingredItem.textContent = item.text;
-    ingredList.push(item);
+    const ownedItem = document.createElement('li');
+    ownedItem.textContet = item.text;
     
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -96,7 +98,6 @@ function createIngredElement (i, owned, d){
     checkbox.checked = item.own;
     checkbox.id = "id";
 
-    ownedItem = ingredItem;
     ingredItem.appendChild(deleteButton);
     ownedItem.appendChild(checkbox);
 
