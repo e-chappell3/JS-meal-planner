@@ -41,7 +41,10 @@ const fridgeButton = document.getElementById("fridgeButton");
 const noteButton = document.getElementById("noteButton");
 const ovenButton = document.getElementById("ovenButton");
 
-loadIngredients();
+document.addEventListener("DOMContentLoaded", () => {
+  loadIngredients();
+});
+
 addButton.addEventListener('click', addIngredient);
 fridgeButton.addEventListener('click', fridgeView);
 noteButton.addEventListener('click', listView);
@@ -83,45 +86,52 @@ function createIngredElement (i, owned, d){
         id: d
     };
     ingredList.push(item);
-    const ingredItem = document.createElement('li');
-    ingredItem.textContent = item.text;
-    const ownedItem = document.createElement('li');
-    ownedItem.textContent = item.text;
-    
-    let deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.className = 'deleteTask';
 
-    let checkbox = document.createElement('input');
-    checkbox.type = "checkbox";
-    checkbox.name = "name";
-    checkbox.checked = item.own;
-    checkbox.id = "id";
+    if(displayList){
+        const ingredItem = document.createElement('li');
+        ingredItem.textContent = item.text;
+        
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'deleteTask';
+        
+        ingredItem.appendChild(deleteButton);
+        deleteButton.addEventListener('click', function(){
+            displayList.removeChild(ingredItem);
+            if(ownedList){
+                ownedList.removeChild(ownedItem);
+            }
+            const index = ingredList.findIndex(i => i.id === item.id);
+            if (index > -1){
+                ingredList.splice(index, 1)
+            }
+            saveIngredient();
+        })
 
-    ingredItem.appendChild(deleteButton);
-    ownedItem.appendChild(checkbox);
+        displayList.appendChild(ingredItem);
+    }
 
-    deleteButton.addEventListener('click', function(){
-        displayList.removeChild(ingredItem);
-        ownedList.removeChild(ownedItem);
-        const index = ingredList.findIndex(i => i.id === item.id);
-        if (index > -1){
-            ingredList.splice(index, 1)
-        }
-        saveIngredient();
-    })
+    if(ownedList){
+        const ownedItem = document.createElement('li');
+        ownedItem.textContent = item.text;
+        
+        let checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = "name";
+        checkbox.checked = item.own;
+        checkbox.id = "id";
+        
+        ownedItem.appendChild(checkbox);
+        checkbox.addEventListener('click', function(){
+            const index = ingredList.findIndex(i => i.id === item.id);
+            if (index > -1){
+                ingredList[index].own = !ingredList[index].own;
+            }
+            saveIngredient();
+        })
 
-    checkbox.addEventListener('click', function(){
-        const index = ingredList.findIndex(i => i.id === item.id);
-        if (index > -1){
-            ingredList[index].own = !ingredList[index].own;
-        }
-        saveIngredient();
-    })
-
-    displayList.appendChild(ingredItem);
-    ownedList.appendChild(ownedItem);
-
+        ownedList.appendChild(ownedItem);
+    }
 }
 
 function saveIngredient(){
