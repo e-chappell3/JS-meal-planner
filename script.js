@@ -51,15 +51,15 @@ noteButton.addEventListener('click', listView);
 ovenButton.addEventListener('click', ovenView);
 
 function fridgeView(){
-    document.location.href = "https://e-chappell3.github.io/meal-planner/fridge";
+    document.location.href = "fridge.html";
 }
 
 function listView(){
-    document.location.href = "https://e-chappell3.github.io/meal-planner/list";
+    document.location.href = "list.html";
 }
 
 function ovenView(){
-    document.location.href = "https://e-chappell3.github.io/meal-planner/oven";
+    document.location.href = "oven.html";
 }
 
 function addIngredient(){
@@ -98,14 +98,12 @@ function createIngredElement (i, owned, d){
         ingredItem.appendChild(deleteButton);
         deleteButton.addEventListener('click', function(){
             displayList.removeChild(ingredItem);
-            if(ownedList){
-                ownedList.removeChild(ownedItem);
-            }
             const index = ingredList.findIndex(i => i.id === item.id);
             if (index > -1){
                 ingredList.splice(index, 1)
             }
             saveIngredient();
+            loadIngredients();
         })
 
         displayList.appendChild(ingredItem);
@@ -117,9 +115,7 @@ function createIngredElement (i, owned, d){
         
         let checkbox = document.createElement('input');
         checkbox.type = "checkbox";
-        checkbox.name = "name";
         checkbox.checked = item.own;
-        checkbox.id = "id";
         
         ownedItem.appendChild(checkbox);
         checkbox.addEventListener('click', function(){
@@ -130,7 +126,7 @@ function createIngredElement (i, owned, d){
             saveIngredient();
         })
 
-        ownedList.appendChild(ownedItem);
+            ownedList.appendChild(ownedItem);
     }
 }
 
