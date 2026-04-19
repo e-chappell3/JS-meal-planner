@@ -34,6 +34,7 @@ function setMake(required){
 const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
+const ownedList = document.getElementById('ownedList');
 const ingredList = [];
 
 const fridgeButton = document.getElementById("fridgeBox");
@@ -89,7 +90,15 @@ function createIngredElement (i, owned, d){
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteTask';
 
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.name = "name";
+    checkbox.checked = item.own;
+    checkbox.id = "id";
+
+    ownedItem = ingredItem;
     ingredItem.appendChild(deleteButton);
+    ownedItem.appendChild(checkbox);
 
     deleteButton.addEventListener('click', function(){
         displayList.removeChild(ingredItem);
@@ -100,7 +109,17 @@ function createIngredElement (i, owned, d){
         saveIngredient();
     })
 
+    checkbox.addEventListener('click', function(){
+        const index = ingredList.findIndex(i => i.id === item.id);
+        if (index > -1){
+            ingredList[index].own = !ingredList[index].own;
+        }
+        saveIngredient();
+    })
+
     displayList.appendChild(ingredItem);
+    ownedList.appendChild(ownedItem);
+
 }
 
 function saveIngredient(){
