@@ -86,7 +86,7 @@ function createIngredElement (i, owned, d){
     const ingredItem = document.createElement('li');
     ingredItem.textContent = item.text;
     const ownedItem = document.createElement('li');
-    ownedItem.textContet = item.text;
+    ownedItem.textContent = item.text;
     
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -103,6 +103,7 @@ function createIngredElement (i, owned, d){
 
     deleteButton.addEventListener('click', function(){
         displayList.removeChild(ingredItem);
+        ownedList.removeChild(ownedItem);
         const index = ingredList.findIndex(i => i.id === item.id);
         if (index > -1){
             ingredList.splice(index, 1)
@@ -134,7 +135,6 @@ function loadIngredients(){
     ingredients.forEach(item => {
         if(item){
             createIngredElement(item.text, item.own, item.id);
-        }
-        
+        }   
     });
 }
