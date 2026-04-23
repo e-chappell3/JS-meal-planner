@@ -3,6 +3,18 @@ const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
 const ingredList = [];
+const item = {
+        text: "Onion",
+        own: true,
+        id: 1
+    };
+ingredList.push(item);
+const item2 = {
+        text: "Olive",
+        own: true,
+        id: 2
+    };
+ingredList.push(item2);
 
 const recipeList = document.getElementById('recipeList');
 const nameInput = document.getElementById('recipeName');
@@ -20,22 +32,38 @@ document.addEventListener("DOMContentLoaded", () => {
   loadIngredients();
 });
 
-addButton.addEventListener('click', addIngredient());
-makeButton.addEventListener('click', filterRecipes());
-fridgeButton.addEventListener('click', fridgeView());
-noteButton.addEventListener('click', function(){
+if (addButton != null){
+    addButton.addEventListener('click', addIngredient);
+}
+if (makeButton != null){
+    makeButton.addEventListener('click', filterRecipes);
+    recipeButton.addEventListener('click', recipeView);
+}
+if (iSearch != null){
+    iSearch.addEventListener('input', search);
+}
+if (fridgeButton != null){
+    fridgeButton.addEventListener('click', fridgeView);
+    noteButton.addEventListener('click', noteView);
+    ovenButton.addEventListener('click', ovenView);
+}
+
+function noteView(){
     document.location.href = "list.html";
-});
-ovenButton.addEventListener('click', function(){
+}
+
+function ovenView(){
     document.location.href = "oven.html";
-});
-recipeButton.addEventListener('click', function(){
-    document.location.href = "recipe.html";
-    doneButton.addEventListener('click', addRecipe());
-})
+}
 
 function fridgeView(){
+    document.location.href = "fridge.html";
     loadRecipes();
+}
+
+function recipeView(){
+    document.location.href = "recipe.html";
+    doneButton.addEventListener('click', addRecipe);
 }
 
 function addIngredient(){
@@ -106,7 +134,49 @@ function createIngredElement (i, owned, d){
     }
 }
 
-// need to sort out searching for and adding ingredients
+function search(){
+    console.log(ingredList, typeof ingredList);
+    console.log("typing:", iSearch.value, "\nSearching:",ingredList);
+    let results = document.getElementById("resultsList");
+    const query = iSearch.value.toLowerCase();
+    console.log("Query:",query);
+    results.innerHTML = "";
+    
+    if (!query){
+        return;
+    }
+    
+    const matches = ingredList.filter(item =>
+        item.text.toLowerCase().trim().includes(query.trim())
+    );
+
+    matches.forEach(item=> {
+        const li = document.createElement("li");
+        li.textContent = item.text;
+
+        li.addEventListener("click", function(){
+            let deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'deleteIngredient';
+            
+            li.appendChild(deleteButton);
+            // current issue need to make deleteButton work (appears but improper deletion = error)
+            deleteButton.addEventListener('click', function(){
+                const index = displayList.indexOf(item);
+                if (index > -1) {
+                    displayList.splice(index, 1);
+                }
+
+            })
+
+            iList.appendChild(li);
+            iSearch.value = "";
+            results.innerHTML = "";
+        })
+        results.appendChild(li);
+    })
+}
+
 function addRecipe(){
     const i = nameInput.value;
 
