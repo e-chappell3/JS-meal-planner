@@ -3,18 +3,18 @@ const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
 const ingredList = [];
-const item = {
-        text: "Onion",
-        own: true,
-        id: 1
-    };
-ingredList.push(item);
-const item2 = {
-        text: "Olive",
-        own: true,
-        id: 2
-    };
-ingredList.push(item2);
+// const item = {
+//         text: "Onion",
+//         own: true,
+//         id: 1
+//     };
+// ingredList.push(item);
+// const item2 = {
+//         text: "Olive",
+//         own: true,
+//         id: 2
+//     };
+// ingredList.push(item2);
 
 const recipeList = document.getElementById('recipeList');
 const nameInput = document.getElementById('recipeName');
@@ -23,6 +23,7 @@ const iList = document.getElementById("neededList");
 const doneButton = document.getElementById("done");
 const recipeButton = document.getElementById('recipeAdd');
 const makeButton = document.getElementById('make');
+const recList = [];
 
 const fridgeButton = document.getElementById("fridgeButton");
 const noteButton = document.getElementById("noteButton");
@@ -48,6 +49,12 @@ if (fridgeButton != null){
     ovenButton.addEventListener('click', ovenView);
 }
 
+if (doneButton != null){
+    doneButton.addEventListener('click', function(){
+        addRecipe()
+    })
+}
+
 function noteView(){
     document.location.href = "list.html";
 }
@@ -63,7 +70,6 @@ function fridgeView(){
 
 function recipeView(){
     document.location.href = "recipe.html";
-    doneButton.addEventListener('click', addRecipe);
 }
 
 function addIngredient(){
@@ -94,23 +100,22 @@ function createIngredElement (i, owned, d){
     if(displayList){
         const ingredItem = document.createElement('li');
         ingredItem.textContent = item.text;
+        console.log("ingredItem added:", ingredItem);
         
         let deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.className = 'deleteIngredient';
         
         ingredItem.appendChild(deleteButton);
+        displayList.appendChild(ingredItem);
         deleteButton.addEventListener('click', function(){
             displayList.removeChild(ingredItem);
             const index = ingredList.findIndex(i => i.id === item.id);
             if (index > -1){
-                ingredList.splice(index, 1)
+                var removed = ingredList.splice(index, 1)
             }
             saveIngredient();
-            loadIngredients();
         })
-
-        displayList.appendChild(ingredItem);
     }
 
     if(ownedList){
@@ -130,7 +135,7 @@ function createIngredElement (i, owned, d){
             saveIngredient();
         })
 
-            ownedList.appendChild(ownedItem);
+        ownedList.appendChild(ownedItem);
     }
 }
 
@@ -151,37 +156,43 @@ function search(){
     );
 
     matches.forEach(item=> {
-        const li = document.createElement("li");
-        li.textContent = item.text;
-
-        li.addEventListener("click", function(){
-            let deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
-            deleteButton.className = 'deleteIngredient';
-            
-            li.appendChild(deleteButton);
-            // current issue need to make deleteButton work (appears but improper deletion = error)
-            deleteButton.addEventListener('click', function(){
-                const index = displayList.indexOf(item);
-                if (index > -1) {
-                    displayList.splice(index, 1);
-                }
-
-            })
-
-            iList.appendChild(li);
+        const searchedItem = document.createElement("li");
+        searchedItem.textContent = item.text;
+        searchedItem.addEventListener("click", function(){
+            ingredientToRecipe(item);
             iSearch.value = "";
             results.innerHTML = "";
         })
-        results.appendChild(li);
+        results.appendChild(searchedItem);
+        console.log("Current result:",results);
     })
 }
 
-function addRecipe(){
-    const i = nameInput.value;
+function ingredientToRecipe(item){
+    const recipeItem = document.createElement("li");
+    recipeItem.textContent = item.text;
 
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteIngredient';
+
+    deleteButton.addEventListener("click", function(){
+        iList.removeChild(recipeItem);
+    })
+
+    recipeItem.appendChild(deleteButton);
+    iList.appendChild(recipeItem);
+}
+
+function addRecipe(){
+    console.log("Adding recipe:",nameInput.value);
     if (nameInput.value){
-        createRecipe(i, iList, 0);
+        const i = nameInput.value;
+        const reqIngred = []
+        iList.querySelectorAll("li").forEach(li => {
+            reqIngred.push(li.firstChild.textContent);
+        });
+        createRecipe(i, reqIngred, 0);
         ingredientInput.value = '';
 
         saveRecipe();
@@ -200,7 +211,7 @@ function createRecipe(n, i, d){
         ingreds: i,
         id: d
     };
-    recList.push(item);
+    recList.push(item)
 
     if(recipeList){
         const recItem = document.createElement('li');
@@ -212,13 +223,12 @@ function createRecipe(n, i, d){
         
         recItem.appendChild(deleteButton);
         deleteButton.addEventListener('click', function(){
-            displayList.removeChild(recItem);
-            const index = ingredList.findIndex(i => i.id === item.id);
+            recipeList.removeChild(recItem);
+            const index = recList.findIndex(r => r.id === item.id);
             if (index > -1){
                 recList.splice(index, 1)
             }
             saveRecipe();
-            loadRecipes();
         })
 
         let editButton = document.createElement('button');
@@ -226,13 +236,16 @@ function createRecipe(n, i, d){
         editButton.className = 'editRecipe';
 
         recItem.appendChild(editButton);
-        editButton.addEventListener('click', editRecipe(recItem));
+        editButton.addEventListener('click', function(){
+            editRecipe(recItem)
+        })
 
         recipeList.appendChild(recItem);
     }
 }
 
 function saveIngredient(){
+    //var unique = ingredList.filter((value, index, array) => array.indexOf(value) === index)
     console.log("Saving: ", ingredList);
     localStorage.setItem('ingredList', JSON.stringify(ingredList));
 }
@@ -272,17 +285,17 @@ function checkRecipe(recipe){
 }
 
 function editRecipe(recipe){
-    document.location.href = "recipe.html";
-    nameInput.value = recipe.name;
-    recipe.ingreds.forEach(item =>{
-        if(item){
-            iList.textContent = item.text;
-        }
-    })
+    // document.location.href = "recipe.html";
+    // nameInput.value = recipe.name;
+    // recipe.ingreds.forEach(item =>{
+    //     if(item){
+    //         iList.textContent = item.text;
+    //     }
+    // })
 
-    if (doneButton.clicked == true){
-        saveRecipe();
-    }
+    // if (doneButton.clicked == true){
+    //     saveRecipe();
+    // }
 }
 
 function saveRecipe(){
