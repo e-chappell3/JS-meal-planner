@@ -3,20 +3,9 @@ const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
 const ingredList = [];
-// const item = {
-//         text: "Onion",
-//         own: true,
-//         id: 1
-//     };
-// ingredList.push(item);
-// const item2 = {
-//         text: "Olive",
-//         own: true,
-//         id: 2
-//     };
-// ingredList.push(item2);
 
 const recipeList = document.getElementById('recipeList');
+const makeList = document.getElementById('makeList');
 const nameInput = document.getElementById('recipeName');
 const iSearch = document.getElementById("ingredSearch");
 const iList = document.getElementById("neededList");
@@ -30,7 +19,7 @@ const noteButton = document.getElementById("noteButton");
 const ovenButton = document.getElementById("ovenButton");
 
 document.addEventListener("DOMContentLoaded", () => {
-    if (displayList){
+    if (displayList || ownedList){
         loadIngredients();
     }
     if (recipeList){
@@ -66,12 +55,6 @@ if (fridgeButton != null){
     noteButton.addEventListener('click', noteView);
     ovenButton.addEventListener('click', ovenView);
 }
-
-// if (doneButton != null){
-//     doneButton.addEventListener('click', function createFunction(){
-//         addRecipe()
-//     })
-// }
 
 function noteView(){
     document.location.href = "list.html";
@@ -144,15 +127,14 @@ function createIngredElement (i, owned, d){
         checkbox.checked = item.own;
         
         ownedItem.appendChild(checkbox);
-        checkbox.addEventListener('click', function(){
+        ownedList.appendChild(ownedItem);
+        checkbox.addEventListener('change', function(){
             const index = ingredList.findIndex(i => i.id === item.id);
             if (index > -1){
                 ingredList[index].own = !ingredList[index].own;
             }
             saveIngredient();
         })
-
-        ownedList.appendChild(ownedItem);
     }
 }
 
@@ -285,21 +267,41 @@ function loadIngredients(){
 // sort list based on required list length (can show recipes w/ least ingredients required if none)
 function filterRecipes(){
     let make = []
-    recipeList.forEach (item =>{
+    var ctr = 0;
+    recList.forEach(item =>{
         let required = checkRecipe(item)
-
-        if (required.length == 0){
-            make.push(item);
-        }
+        make[ctr] = [];
+        make[ctr][0] = item.name;
+        make[ctr][1] = required.length;
+        ctr++;
     })
+
+    make.sort(twoDSort);
+    for (let i = 0; i < Math.min(5, make.length); i++){
+        const makeItem = document.createElement('li');
+        makeItem.textContent = `${make[i][0]}: missing ${make[i][1]} element(s)`;
+        makeList.appendChild(makeItem);
+    }
+}
+
+function twoDSort(a, b){
+    if (a[1] == b[1]){
+        return 0;
+    }
+    else{
+        return (a[1] < b[1]) ? -1 : 1;
+    }
 }
 
 function checkRecipe(recipe){
     let required = [];
-    for (let i = 0; i < recipe.ingreds.length(); i++){
-        let curr = recipe.ingreds[i];
+    for (let i = 0; i < recipe.ingreds.length; i++){
+        let curr = ingredList.find(o => o.text == recipe.ingreds[i]);
+        console.log("Found curr:",curr,"where name =", recipe.ingreds[i]);
+        console.log("checking item",curr.text,"owned =",curr.own);
         if (curr.own == false){
             required.push(curr);
+            console.log(curr,"not owned, list is now:",required);
         }
     }
 
