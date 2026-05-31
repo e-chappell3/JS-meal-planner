@@ -30,7 +30,12 @@ const noteButton = document.getElementById("noteButton");
 const ovenButton = document.getElementById("ovenButton");
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadIngredients();
+    if (displayList){
+        loadIngredients();
+    }
+    if (recipeList){
+        loadRecipes();
+    }
 });
 
 if (addButton != null){
@@ -61,15 +66,18 @@ function noteView(){
 
 function ovenView(){
     document.location.href = "oven.html";
+    console.log("loadRecipes() calling");
+    loadRecipes();
 }
 
 function fridgeView(){
     document.location.href = "fridge.html";
-    loadRecipes();
 }
 
 function recipeView(){
     document.location.href = "recipe.html";
+    console.log("loadRecipes() calling");
+    loadRecipes();
 }
 
 function addIngredient(){
@@ -193,7 +201,7 @@ function addRecipe(){
             reqIngred.push(li.firstChild.textContent);
         });
         createRecipe(i, reqIngred, 0);
-        ingredientInput.value = '';
+        //ingredientInput.value = '';
 
         saveRecipe();
     }
@@ -304,6 +312,7 @@ function saveRecipe(){
 }
 
 function loadRecipes(){
+    console.log("loadRecipes()");
     const recipes = JSON.parse(localStorage.getItem('recList') || "[]");
     console.log("Retrieving: ",recipes);
     recipes.forEach(item => {
