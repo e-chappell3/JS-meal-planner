@@ -35,6 +35,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (recipeList){
         loadRecipes();
+        if (window.location.pathname.endsWith("recipe.html")){
+            const mode = loadEditRecipe();
+            if (mode == true){
+                doneButton.addEventListener('click', function(){
+                    addRecipe()
+                })
+            }
+            else{
+                doneButton.addEventListener('click', function(){
+                    saveEditedRec()
+                })
+            }
+        }
     }
 });
 
@@ -54,11 +67,11 @@ if (fridgeButton != null){
     ovenButton.addEventListener('click', ovenView);
 }
 
-if (doneButton != null){
-    doneButton.addEventListener('click', function(){
-        addRecipe()
-    })
-}
+// if (doneButton != null){
+//     doneButton.addEventListener('click', function createFunction(){
+//         addRecipe()
+//     })
+// }
 
 function noteView(){
     document.location.href = "list.html";
@@ -66,8 +79,6 @@ function noteView(){
 
 function ovenView(){
     document.location.href = "oven.html";
-    console.log("loadRecipes() calling");
-    loadRecipes();
 }
 
 function fridgeView(){
@@ -76,8 +87,6 @@ function fridgeView(){
 
 function recipeView(){
     document.location.href = "recipe.html";
-    console.log("loadRecipes() calling");
-    loadRecipes();
 }
 
 function addIngredient(){
@@ -194,19 +203,23 @@ function ingredientToRecipe(item){
 
 function addRecipe(){
     console.log("Adding recipe:",nameInput.value);
-    if (nameInput.value){
+    if (nameInput.value && !(iList.innerHTML === "")){
         const i = nameInput.value;
         const reqIngred = []
         iList.querySelectorAll("li").forEach(li => {
             reqIngred.push(li.firstChild.textContent);
         });
         createRecipe(i, reqIngred, 0);
-        //ingredientInput.value = '';
 
         saveRecipe();
     }
     else {
-        alert('Please enter a recipe name')
+        if (!nameInput.value){
+            alert('Please enter a recipe name.')
+        }
+        else{
+            alert("Please add at least 1 ingredient to your recipe.")
+        }
     }
 }
 
@@ -245,15 +258,15 @@ function createRecipe(n, i, d){
 
         recItem.appendChild(editButton);
         editButton.addEventListener('click', function(){
-            editRecipe(recItem)
+            editRecipe(item)
         })
 
         recipeList.appendChild(recItem);
+        document.querySelector('.editRecipe')
     }
 }
 
 function saveIngredient(){
-    //var unique = ingredList.filter((value, index, array) => array.indexOf(value) === index)
     console.log("Saving: ", ingredList);
     localStorage.setItem('ingredList', JSON.stringify(ingredList));
 }
@@ -292,18 +305,52 @@ function checkRecipe(recipe){
     return required;
 }
 
-function editRecipe(recipe){
-    // document.location.href = "recipe.html";
-    // nameInput.value = recipe.name;
-    // recipe.ingreds.forEach(item =>{
-    //     if(item){
-    //         iList.textContent = item.text;
-    //     }
-    // })
+function loadEditRecipe(){
+    var rId = JSON.parse(localStorage.getItem("recipeToEdit"));
+    if (!rId){
+        return false;
+    }
+    recipe = recList.find(r => r.id == rId);
+    nameInput.value = recipe.name;
+    console.log("Loading name:",recipe.name);
+    recipe.ingreds.forEach(item =>{
+        if(item){
+            ingredientToRecipe({
+                text: item
+            });
+            console.log("Loading required item:", item.text);
+        }
+    })
+    
+    console.log("Recipe to edit:",recipe);
+    return true;
+}
 
-    // if (doneButton.clicked == true){
-    //     saveRecipe();
-    // }
+function editRecipe(recipe){
+    localStorage.setItem(
+        "recipeToEdit",
+        JSON.stringify(recipe.id)
+    );
+    document.location.href = "recipe.html";
+}
+
+function saveEditedRec(){
+    var rId = JSON.parse(localStorage.getItem("recipeToEdit"));
+    localStorage.removeItem("recipeToEdit");
+
+    const index = recList.findIndex(r => r.id === rId);
+    if (index <= -1){
+        alert("Recipe not found!");
+    }
+
+    recList[index].name = nameInput.value;
+    const reqIngred = []
+    iList.querySelectorAll("li").forEach(li => {
+        reqIngred.push(li.firstChild.textContent);
+    });
+    recList[index].ingreds = reqIngred;
+
+    saveRecipe();
 }
 
 function saveRecipe(){
@@ -312,6 +359,7 @@ function saveRecipe(){
 }
 
 function loadRecipes(){
+    recList.length = 0
     console.log("loadRecipes()");
     const recipes = JSON.parse(localStorage.getItem('recList') || "[]");
     console.log("Retrieving: ",recipes);
