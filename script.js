@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const mode = loadEditRecipe();
             if (mode == true){
                 doneButton.addEventListener('click', function(){
-                    addRecipe()
+                    saveEditedRec()
                 })
             }
             else{
                 doneButton.addEventListener('click', function(){
-                    saveEditedRec()
+                    addRecipe()
                 })
             }
         }
@@ -237,6 +237,7 @@ function createRecipe(n, i, d){
     if(recipeList){
         const recItem = document.createElement('li');
         recItem.textContent = item.name;
+        recItem.dataset.recipeId = item.id;
 
         let deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
@@ -312,13 +313,13 @@ function loadEditRecipe(){
     }
     recipe = recList.find(r => r.id == rId);
     nameInput.value = recipe.name;
-    console.log("Loading name:",recipe.name);
+    console.log("Loading to edit:",recipe.name);
     recipe.ingreds.forEach(item =>{
         if(item){
             ingredientToRecipe({
                 text: item
             });
-            console.log("Loading required item:", item.text);
+            console.log("Loading required item for edit:", item.text);
         }
     })
     
@@ -341,7 +342,11 @@ function saveEditedRec(){
     const index = recList.findIndex(r => r.id === rId);
     if (index <= -1){
         alert("Recipe not found!");
+        return false;
     }
+    console.log(recipeList);
+    const displayRec = recipeList.querySelector(`[data-recipe-id="${rId}"]`);
+    displayRec.firstChild.nodeValue = nameInput.value;
 
     recList[index].name = nameInput.value;
     const reqIngred = []
@@ -349,6 +354,7 @@ function saveEditedRec(){
         reqIngred.push(li.firstChild.textContent);
     });
     recList[index].ingreds = reqIngred;
+    console.log("Edited recList:",recList);
 
     saveRecipe();
 }
