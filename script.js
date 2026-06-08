@@ -271,15 +271,57 @@ function filterRecipes(){
     recList.forEach(item =>{
         let required = checkRecipe(item)
         make[ctr] = [];
-        make[ctr][0] = item.name;
-        make[ctr][1] = required.length;
+        make[ctr][0] = item;
+        make[ctr][1] = required;
         ctr++;
     })
 
     make.sort(twoDSort);
     for (let i = 0; i < Math.min(5, make.length); i++){
         const makeItem = document.createElement('li');
-        makeItem.textContent = `${make[i][0]}: missing ${make[i][1]} element(s)`;
+        makeItem.textContent = `${make[i][0].name}: missing ${make[i][1].length} element(s)`;
+
+        makeItem.addEventListener("click", function(){
+            console.log("recipe clicked");
+            let varId = "exists " + make[i][0].name;
+            let recipeIngreds = document.getElementById(varId);
+            if (recipeIngreds){
+                //let recipeIngreds = document.getElementById("exists");
+                let hidden = recipeIngreds.getAttribute("hidden");
+                if (hidden){
+                    console.log("unhiding existing list");
+                    recipeIngreds.removeAttribute("hidden");
+                }
+                else{
+                    console.log("hiding existing list");
+                    recipeIngreds.setAttribute("hidden", "hidden");
+                }
+            }
+            else{
+                console.log("creating new list");
+                let recipeIngreds = document.createElement('ul');
+                let varId = "exists " + make[i][0].name;
+                recipeIngreds.setAttribute('id', varId);
+                for (let j = 0; j < make[i][0].ingreds.length; j++){
+                    const ingredItem = document.createElement('li');
+                    ingredItem.textContent = make[i][0].ingreds[j];
+                    console.log("ingredItem",j,"=",make[i][0].ingreds[j]);
+                    let checkbox = document.createElement('input');
+                    checkbox.type = "checkbox";
+                    checkbox.disabled = true;
+                    let curr = ingredList.find(o => o.text == make[i][0].ingreds[j]);
+                    checkbox.checked = curr.own;
+                    console.log("ingredItem owned =",curr.own);
+                    
+                    ingredItem.appendChild(checkbox);
+                    recipeIngreds.appendChild(ingredItem);
+                    console.log("list =",recipeIngreds);
+
+                    makeItem.appendChild(recipeIngreds);
+                }
+            }
+        })
+            
         makeList.appendChild(makeItem);
     }
 }
