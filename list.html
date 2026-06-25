@@ -5,11 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingredient List</title>
     <link rel="icon" type="image/png" href="https://i.redd.it/gz8bz6ffh8191.png?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-image: url(assets/notekitchen.png);
+            background-size: cover;
+            background-repeat: no-repeat;  
+        }
+
+        *{
+            font-family:  "Pixelify Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .region {
+            position: absolute;
+            top: 250px;
+            left: 530px;
+            max-height: 320px;
+            max-width: 320px;
+            margin: 1rem;
+            padding: 1rem;
+            overflow: scroll;
+        }
+
+        img {
+            height: auto;
+            display: block;
+            width: 100%;
+        }
+        ul{
+            padding: 0;
+        }
+
+        .back{
+            border: none;
+            background: none;
+        }
+    </style>
 </head>
-<body>
-    <input type="text" id="ingredientName" placeholder="Add an Ingredient">
-    <button id="add">Add</button>
-    <ul id="ingredientList"></ul>
+<body>    
+    <div class="region">
+        <div class="container">
+            <input type="text" id="ingredientName" placeholder="Add an Ingredient">
+            <button id="add">Add</button>
+        </div>
+        <ul id="ingredientList"></ul>
+    </div>
+    <button class="back" onclick="window.history.back()">
+        <img src="assets/backarrow.png"/>
+    </button>
     <script src="script.js"></script>
 </body>
 </html>
