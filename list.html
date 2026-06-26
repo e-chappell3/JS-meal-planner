@@ -29,19 +29,22 @@
         }
         .region {
             position: absolute;
-            top: 250px;
-            left: 530px;
-            max-height: 320px;
-            max-width: 320px;
-            margin: 1rem;
+            left: 47%;
+            top: 61%;
+            height: 20vw;
+            margin-top: -10vw;
+            width: 20vw;
+            margin-left: -10vw;
             padding: 1rem;
             overflow: scroll;
+            z-index: 1;
         }
 
         img {
             height: auto;
             display: block;
             width: 100%;
+            z-index: 99;
         }
         ul{
             padding: 0;
@@ -64,6 +67,7 @@
     <button class="back" onclick="window.history.back()">
         <img src="assets/backarrow.png"/>
     </button>
+    <img src="assets/fridgenote.png">
     <script src="script.js"></script>
 </body>
 </html>
