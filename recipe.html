@@ -50,19 +50,67 @@
             border: none;
             background: none;
         }
+
+        .header{
+            display: flex;
+            justify-content: center;
+        }
+
+        .region {
+            position: absolute;
+            left: 50%;
+            top: 59%;
+            height: 34vw;
+            width: 44vw;
+            transform: translate(-22vw, -17vw);
+            overflow: scroll;
+            z-index: 1;
+
+            display: flex;
+
+        }
+
+        .pageTwo {
+            margin-top: 4vw;
+        }
+
+        .book {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -28vw;
+            width: 50%;
+            z-index: 99;
+        }
+
+        ul{
+            font-size: 1.25vw;
+        }
     </style>
 </head>
 <body>
-    <input type="text" id="recipeName" placeholder="Name your Recipe">
-    <input type="text" id="ingredSearch" placeholder="Find Ingredient">
+    <div class="header">
+        <h1 Make a Recipe!></h1>
+        <button id="recipeBack" class="back" onclick="window.history.back()">
+            <img src="assets/backarrow.png"/>
+        </button>
+    </div>
+    <div class="region">
+        <div class="pageOne">
+            <input type="text" id="recipeName" placeholder="Name your Recipe">
+            <input type="text" id="ingredSearch" placeholder="Find Ingredient">
+            <ul id="resultsList"></ul>
+            <ul id="neededList"></ul>
+            <button id="done">Save Recipe</button>
+        </div>
+        <div class="pageTwo">
+            <ul id="recipeList"></ul>
+        </div>
+    </div>
+    
     <ul id="ingredientList" class="ingredientList"></ul>
-    <ul id="resultsList"></ul>
-    <ul id="neededList"></ul>
-    <ul id="recipeList"></ul>
-    <button id="done">Save Recipe</button>
-    <button id="recipeBack" class="back" onclick="window.history.back()">
-        <img src="assets/backarrow.png"/>
-    </button>
+    
+    <img src="assets/recipebook.png" class="book">
     <script src="script.js"></script>
 </body>
 </html>
