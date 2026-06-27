@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- set up page name and icon -->
     <title>What's in your Fridge?</title>
     <link rel="icon" type="image/png" href="https://i.redd.it/gz8bz6ffh8191.png?">
+    <!-- import font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
+    <!-- CSS -->
     <style>
         :root{
+            /* Color Variables */
             --brown: #D7CEC5;
             --blue: #C7CCF5;
             --cream: #F6F6EC;
@@ -18,6 +22,7 @@
         }
 
         html, body{
+            /* control page sizing w/ hidden overflow */
             margin: 0;
             width: auto;
             height: auto;
@@ -25,6 +30,7 @@
         }
 
         body{
+            /* set up background image with no overflow */
             background-image: url(assets/backkitchen.png);
             background-size: cover;
             background-repeat: no-repeat;
@@ -33,6 +39,7 @@
         }
 
         *{
+            /* apply font to entire page */
             font-family:  "Pixelify Sans", sans-serif;
             font-optical-sizing: auto;
             font-weight: 400;
@@ -40,17 +47,21 @@
         }
 
         .container{
+            /* center container */
             display: flex;
             justify-content: center;
             margin-top: -2vw
         }
 
         h1{
+            /* style main heading + prevent text wrapping */
             white-space: nowrap;
             font-size: 4vw;
+            text-shadow: 2px 2px var(--cream);
         }
 
         .region{
+            /* define + position region to fit within fridge container/img */
             position: absolute;
             left: 40%;
             top: 50%;
@@ -62,6 +73,7 @@
         }
 
         .fridge {
+            /* position + size fridge image (ensure behind region container) */
             display: block;
             margin-right: auto;
             margin-left: auto;
@@ -71,26 +83,32 @@
         }
 
         .back{
+            /* style back button */
             border: none;
             background: none;
+            box-shadow: none;
         }
 
         ul{
+            /* style list of ingredients */
             font-size: 1.5vw;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- container for page contents -->
         <button class="back" onclick="window.history.back()">
             <img src="assets/backarrow.png"/>
         </button>
         <h1> What Ingredients do you Have?</h1>
         <div class = "region">
+            <!-- nested container for ingredient list -->
+             <!-- list of ingredients including if they are currently owned/not -->
             <ul id="ownedList"></ul>
         </div>
     </div>
-    
+    <!-- fridge image -->
     <img src="assets/openfridge.png" class="fridge">
     <script src="script.js"></script>
 </body>

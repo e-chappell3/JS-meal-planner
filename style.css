@@ -1,4 +1,5 @@
 :root{
+    /* Color Variables */
     --green: #c2d368;
     --darkGreen: #4e584a;
     --cyan: #567b79;
@@ -11,13 +12,15 @@
 }
 
 html, body{
-            margin: 0;
-            width: auto;
-            height: auto;
-        }
+    /* control page sizing */
+        margin: 0;
+        width: auto;
+        height: auto;
+    }
 
 
 body{
+    /* set up background image with no overflow */
     background-image: url(assets/kitchen2.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -26,6 +29,7 @@ body{
 }
 
 h1 {
+    /* set up heading styling */
     color:var(--darkGreen);
     font-family: "Pixelify Sans", sans-serif;
     font-optical-sizing: auto;
@@ -37,12 +41,14 @@ h1 {
 }
 
 .header{
+    /* align + position header elements */
     display: flex;
     justify-content: center;
     margin-top: -3vw;
 }
 
 .help {
+    /* position button adjacent to h1 and remove features other than image */
     border: none;
     background: none;
     cursor: help;
@@ -51,6 +57,7 @@ h1 {
 }
 
 .help img {
+    /* style button icon */
     display: block;
     width: 20%;
     height: auto;
@@ -58,6 +65,7 @@ h1 {
 }
 
 .helpText {
+    /* position + style the pop-up text off the help button */
     position: absolute;
     top: 120px;
     left: 50%;
@@ -72,24 +80,29 @@ h1 {
     font-family: "Pixelify Sans", sans-serif;
     font-size: 16px;
     text-align: center;
-
+    
+    /* remain hidden */
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
 .help:hover .helpText {
+    /* when help container is hovered, show the corresponding text */
     opacity: 1;
 }
 
 button {
+    /* remove button backgrounds so the buttons appear just as parts of background image */
     background-color: transparent;
 }
 
+/* position the 3 buttons corresponding to the background image */
 .fridge {
 position: absolute;
 top: 32vw;
 left: 12vw;
+/* using transform to be more dynamic */
 transform: translate(-40px, -25px);
 font-size: 16px;
 padding: 50px 80px;

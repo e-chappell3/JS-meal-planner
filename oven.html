@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- set up page name and icon -->
     <title>What can you make?</title>
     <link rel="icon" type="image/png" href="https://i.redd.it/gz8bz6ffh8191.png?">
+    <!-- import font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
+    <!-- CSS -->
     <style>
         :root{
+            /* Color Variables */
             --darkBlue: #0a1c2a;
             --midBlue: #456b96;
             --lightBlue: #9cc1ea;
         }
 
         html, body{
+            /* control page sizing w/ hidden overflow */
             margin: 0;
             width: auto;
             height: auto;
@@ -24,6 +29,7 @@
         }
 
         body{
+            /* set up background image with no overflow */
             background-image: url(assets/backkitchen.png);
             background-size: cover;
             background-repeat: no-repeat;
@@ -32,6 +38,7 @@
         }
 
         *{
+            /* apply font to entire page */
             font-family:  "Pixelify Sans", sans-serif;
             font-optical-sizing: auto;
             font-weight: 400;
@@ -39,39 +46,65 @@
         }
 
         h1{
+            /* style main heading w/ variable font size */
             font-size: 4vw;
+            text-shadow: 2px 2px var(--lightBlue);
         }
 
         h2{
+            /* style subheadings w/ variable font size */
             font-size: 2.5vw;
+            text-shadow: 2px 2px var(--lightBlue);
         }
 
         ul{
+            /* style list items w/ variable font size */
             font-size: 1.5vw;
         }
 
         .header{
+            /* center header container */
             display: flex;
             justify-content: center;
         }
         
         .buttonContainer{
+            /* center button container just below header */
             display: flex;
             justify-content: center;
             margin-top: -2vw;
         }
 
         .mainContainer{
+            /* seperate main container elements into rows */
             display: flex;
             flex-direction: row;
         }
 
+        button {
+            /* style all buttons */
+            color: #fff;
+            background-color: var(--midBlue);
+            margin: 6px;
+            border: 0;
+            box-shadow: 0px 5px var(--darkBlue), 0px -5px var(--darkBlue), 5px 0px var(--darkBlue), -5px 0px var(--darkBlue), 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36 ;
+            cursor: pointer;
+        }
+
+        button:active {
+            /* style button when active */
+            box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black,inset 0px 5px #00000038;
+        }
+
         .back{
+            /* style back button */
             border: none;
             background: none;
+            box-shadow: none;
         }
 
         .oven {
+            /* position + size oven image */
             display: block;
             margin-right: auto;
             margin-left: 10vw;
@@ -79,31 +112,39 @@
         }
 
         .ownedList{
+            /* hide owned list as only needed for functionality */
             visibility: hidden;
         }
     </style>
 </head>
 <body>
     <div class="header">
+        <!-- container for title and back button -->
         <button class="back" onclick="window.history.back()">
             <img src="assets/backarrow.png"/>
         </button>
         <h1> What can I Cook?</h1>
     </div>
     <div class="buttonContainer">
+        <!-- container for action buttons -->
         <button id="recipeAdd">Add New Recipe</button>
         <button id="make" onclick="">What can I make?</button>
     </div>
     <div class="mainContainer">
+        <!-- container for main content including oven img, list of recipes and available recipes-->
          <div class="recipeContainer">
+            <!-- view recipes -->
             <h2> Recipes:</h2>
+            <!-- list of stored recipes -->
             <ul id="recipeList"></ul>
         </div>       
 
         <img src="assets/openoven.png" class="oven">
 
         <div class="makeContainer">
+            <!-- view what recipes you can make -->
             <h2> What To Make:</h2>
+            <!-- list of recipes you can make based on ownedList (have most ingredients for) -->
             <ul id="makeList"></ul>
         </div> 
     </div>
