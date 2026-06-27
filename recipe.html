@@ -46,14 +46,15 @@
             visibility: hidden;
         }
 
-        .back{
-            border: none;
-            background: none;
-        }
-
         .header{
             display: flex;
             justify-content: center;
+            margin-top: -2vw;
+        }
+
+        h1{
+            font-size: 4vw;
+            text-shadow: 2px 2px var(--cream);
         }
 
         .region {
@@ -70,35 +71,68 @@
 
         }
 
+        .pageOne {
+            margin-left: 1.2vw;
+            margin-top: 1.6vw;
+        }
+
         .pageTwo {
+            margin-left: 11vw;
             margin-top: 4vw;
         }
+        
 
         .book {
             display: block;
             margin-right: auto;
             margin-left: auto;
-            margin-top: -28vw;
+            margin-top: -35vw;
             width: 50%;
             z-index: 99;
+        }
+
+        .inputs{
+            display: flex;
+            flex-direction: column;
         }
 
         ul{
             font-size: 1.25vw;
         }
+
+        button {
+            color: #fff;
+            background-color: var(--shadowBlue);
+            margin: 6px;
+            border: 0;
+            box-shadow: 0px 5px var(--brown), 0px -5px var(--brown), 5px 0px var(--brown), -5px 0px var(--brown), 0px 10px #00000038, 5px 5px #00000038, -5px 5px #00000038, inset 0px 5px #ffffff36 ;
+            cursor: pointer;
+        }
+
+        button:active {
+            box-shadow: 0px 5px black, 0px -5px black, 5px 0px black, -5px 0px black,inset 0px 5px #00000038;
+        }
+
+        .back{
+            border: none;
+            background: none;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1 Make a Recipe!></h1>
         <button id="recipeBack" class="back" onclick="window.history.back()">
             <img src="assets/backarrow.png"/>
         </button>
+        <h1> Make a Recipe!</h1>
     </div>
     <div class="region">
         <div class="pageOne">
-            <input type="text" id="recipeName" placeholder="Name your Recipe">
-            <input type="text" id="ingredSearch" placeholder="Find Ingredient">
+            <div class="inputs">
+                <input type="text" id="recipeName" placeholder="Name your Recipe">
+                <input type="text" id="ingredSearch" placeholder="Find Ingredient">
+            </div>
             <ul id="resultsList"></ul>
             <ul id="neededList"></ul>
             <button id="done">Save Recipe</button>
