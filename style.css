@@ -18,125 +18,106 @@ html, body{
 
 
 body{
-    h1 {
-        color:var(--darkGreen);
-        font-family: "Pixelify Sans", sans-serif;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-        text-align: center;
-        text-shadow: 2px 2px var(--peach);
-        font-size: 6vw
-    }
+    background-image: url(assets/kitchen2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    position: relative;
+}
 
-    .header{
-        display: flex;
-        justify-content: center;
-        margin-top: -3vw;
-    }
+h1 {
+    color:var(--darkGreen);
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    text-shadow: 2px 2px var(--peach);
+    font-size: 6vw
+}
 
-    .help {
-        border: none;
-        background: none;
-        cursor: help;
-        padding: 0;
-        position: relative;
-    }
+.header{
+    display: flex;
+    justify-content: center;
+    margin-top: -3vw;
+}
 
-    .help img {
-        display: block;
-        width: 20%;
-        height: auto;
-        margin-top: 5vw;
-    }
-
-    .helpText {
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 250px;
-
-        background-color: var(--darkGreen);
-        color: var(--cream);
-        padding: 0.5em 1em;
-        border-radius: 20px;
-
-        font-family: "Pixelify Sans", sans-serif;
-        font-size: 16px;
-        text-align: center;
-
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-
-    .help:hover .helpText {
-        opacity: 1;
-    }
-
-    button {
-        background-color: transparent;
-    }
-
-    .fridge {
-    position: absolute;
-    top: 28vw;
-    left: 12vw;
-    transform: translate(-40px, -25px);
-    font-size: 16px;
-    padding: 50px 80px;
+.help {
     border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    }
+    background: none;
+    cursor: help;
+    padding: 0;
+    position: relative;
+}
 
-    .note {
-    position: absolute;
-    top: 36vw;
-    left: 12vw;
-    transform: translate(-40px, -40px);
-    font-size: 16px;
-    padding: 80px 80px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    }
-
-    .oven {
-    position: absolute;
-    top: 37vw;
-    left: 40vw;
-    transform: translate(-45px, -35px);
-    font-size: 16px;
-    padding: 70px 90px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    }
-
-
-    .background {
-    /* Set rules to fill background */
-    min-height: 100%;
-    min-width: 1024px;
-        
-    /* Set up proportionate scaling */
-    width: 100%;
+.help img {
+    display: block;
+    width: 20%;
     height: auto;
-        
-    /* Set up positioning */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    }
+    margin-top: 5vw;
+}
 
-    @media screen and (max-width: 2048px) {
-    img.bg {
-        left: 50%;
-        margin-left: -512px;   /* 50% */
-    }
-    }
+.helpText {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
 
+    background-color: var(--darkGreen);
+    color: var(--cream);
+    padding: 0.5em 1em;
+    border-radius: 20px;
+
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 16px;
+    text-align: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.help:hover .helpText {
+    opacity: 1;
+}
+
+button {
+    background-color: transparent;
+}
+
+.fridge {
+position: absolute;
+top: 32vw;
+left: 12vw;
+transform: translate(-40px, -25px);
+font-size: 16px;
+padding: 50px 80px;
+border: none;
+cursor: pointer;
+border-radius: 5px;
+}
+
+.note {
+position: absolute;
+top: 40vw;
+left: 12vw;
+transform: translate(-40px, -40px);
+font-size: 16px;
+padding: 80px 80px;
+border: none;
+cursor: pointer;
+border-radius: 5px;
+}
+
+.oven {
+position: absolute;
+top: 41vw;
+left: 40vw;
+transform: translate(-45px, -35px);
+font-size: 16px;
+padding: 70px 90px;
+border: none;
+cursor: pointer;
+border-radius: 5px;
 }
