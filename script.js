@@ -12,6 +12,7 @@ const iList = document.getElementById("neededList");
 const doneButton = document.getElementById("done");
 const recipeButton = document.getElementById('recipeAdd');
 const makeButton = document.getElementById('make');
+const editBack = document.getElementById('recipeBack');
 const recList = [];
 
 const fridgeButton = document.getElementById("fridgeButton");
@@ -27,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.location.pathname.endsWith("recipe.html")){
             const mode = loadEditRecipe();
             if (mode == true){
+                editBack.addEventListener('click', function(){
+                    localStorage.removeItem("recipeToEdit");
+                })
                 doneButton.addEventListener('click', function(){
                     saveEditedRec()
                 })
@@ -194,6 +198,10 @@ function addRecipe(){
         createRecipe(i, reqIngred, 0);
 
         saveRecipe();
+
+        nameInput.value = "";
+        iList.innerHTML = "";
+        console.log("Cleared inputs to:",nameInput.value);
     }
     else {
         if (!nameInput.value){
@@ -353,6 +361,7 @@ function checkRecipe(recipe){
 
 function loadEditRecipe(){
     var rId = JSON.parse(localStorage.getItem("recipeToEdit"));
+    console.log("Checking if recipe to edit:",rId);
     if (!rId){
         return false;
     }

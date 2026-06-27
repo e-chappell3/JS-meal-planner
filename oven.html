@@ -62,16 +62,8 @@
         }
 
         .mainContainer{
-            display: grid;
-        }
-
-        .makeContainer{
-            margin-left: 80%;
-            margin-top: -12vw;
-        }
-
-        .recipeContainer{
-            margin-left: 5%;
+            display: flex;
+            flex-direction: row;
         }
 
         .back{
@@ -82,13 +74,11 @@
         .oven {
             display: block;
             margin-right: auto;
-            margin-left: auto;
-            margin-top: -5vw;
+            margin-left: 10vw;
             width: 50%;
-            z-index: 99;
         }
 
-        .owned{
+        .ownedList{
             visibility: hidden;
         }
     </style>
@@ -107,17 +97,17 @@
     <div class="mainContainer">
          <div class="recipeContainer">
             <h2> Recipes:</h2>
-            <ul id="recipeList" class="recipe"></ul>
+            <ul id="recipeList"></ul>
         </div>       
 
         <img src="assets/openoven.png" class="oven">
 
         <div class="makeContainer">
             <h2> What To Make:</h2>
-            <ul id="makeList" class="make"></ul>
+            <ul id="makeList"></ul>
         </div> 
     </div>
-    <ul id="ownedList" class="owned"></ul>
+    <ul id="ownedList" class="ownedList"></ul>
 
    
     <script src="script.js"></script>

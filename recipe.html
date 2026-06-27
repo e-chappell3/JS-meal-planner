@@ -42,6 +42,10 @@
             font-style: normal;
         }
 
+        .ingredientList{
+            visibility: hidden;
+        }
+
         .back{
             border: none;
             background: none;
@@ -51,12 +55,12 @@
 <body>
     <input type="text" id="recipeName" placeholder="Name your Recipe">
     <input type="text" id="ingredSearch" placeholder="Find Ingredient">
-    <ul id="ingredientList"></ul>
+    <ul id="ingredientList" class="ingredientList"></ul>
     <ul id="resultsList"></ul>
     <ul id="neededList"></ul>
     <ul id="recipeList"></ul>
     <button id="done">Save Recipe</button>
-    <button class="back" onclick="window.history.back()">
+    <button id="recipeBack" class="back" onclick="window.history.back()">
         <img src="assets/backarrow.png"/>
     </button>
     <script src="script.js"></script>
