@@ -10,6 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
     <style>
+        :root{
+            --darkBlue: #0a1c2a;
+            --midBlue: #456b96;
+            --lightBlue: #9cc1ea;
+        }
+
+        html, body{
+            margin: 0;
+            width: auto;
+            height: auto;
+            overflow: hidden;
+        }
+
         body{
             background-image: url(assets/backkitchen.png);
             background-size: cover;
@@ -25,21 +38,88 @@
             font-style: normal;
         }
 
+        h1{
+            font-size: 4vw;
+        }
+
+        h2{
+            font-size: 2.5vw;
+        }
+
+        ul{
+            font-size: 1.5vw;
+        }
+
+        .header{
+            display: flex;
+            justify-content: center;
+        }
+        
+        .buttonContainer{
+            display: flex;
+            justify-content: center;
+            margin-top: -2vw;
+        }
+
+        .mainContainer{
+            display: grid;
+        }
+
+        .makeContainer{
+            margin-left: 80%;
+            margin-top: -12vw;
+        }
+
+        .recipeContainer{
+            margin-left: 5%;
+        }
+
         .back{
             border: none;
             background: none;
         }
+
+        .oven {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -5vw;
+            width: 50%;
+            z-index: 99;
+        }
+
+        .owned{
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
-    <button id="recipeAdd">Add New Recipe</button>
-    <button id="make">What can I make?</button>
-    <ul id="recipeList"></ul>
-    <ul id="makeList"></ul>
-    <ul id="ownedList"></ul>
-    <button class="back" onclick="window.history.back()">
-        <img src="assets/backarrow.png"/>
-    </button>
+    <div class="header">
+        <button class="back" onclick="window.history.back()">
+            <img src="assets/backarrow.png"/>
+        </button>
+        <h1> What can I Cook?</h1>
+    </div>
+    <div class="buttonContainer">
+        <button id="recipeAdd">Add New Recipe</button>
+        <button id="make" onclick="">What can I make?</button>
+    </div>
+    <div class="mainContainer">
+         <div class="recipeContainer">
+            <h2> Recipes:</h2>
+            <ul id="recipeList" class="recipe"></ul>
+        </div>       
+
+        <img src="assets/openoven.png" class="oven">
+
+        <div class="makeContainer">
+            <h2> What To Make:</h2>
+            <ul id="makeList" class="make"></ul>
+        </div> 
+    </div>
+    <ul id="ownedList" class="owned"></ul>
+
+   
     <script src="script.js"></script>
 </body>
 </html>

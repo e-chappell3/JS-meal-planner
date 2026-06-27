@@ -8,11 +8,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    
     <style>
+        :root{
+            --pink: #DDBCD9;
+            --shadowPink: #BFAABB;
+            --yellow: #FAD793;
+            --shadowYellow: #CDA770;
+        }
+
+        html, body{
+            margin: 0;
+            width: auto;
+            height: auto;
+            overflow: hidden;
+        }
+
         body{
-            background-image: url(assets/notekitchen.png);
+            background-image: url(assets/backkitchen.png);
             background-size: cover;
-            background-repeat: no-repeat;  
+            background-repeat: no-repeat;
+            overflow: hidden;
+            position: relative;
         }
 
         *{
@@ -32,20 +49,21 @@
             left: 47%;
             top: 61%;
             height: 20vw;
-            margin-top: -10vw;
             width: 20vw;
-            margin-left: -10vw;
-            padding: 1rem;
+            transform: translate(-10vw, -10vw);
             overflow: scroll;
             z-index: 1;
         }
 
-        img {
-            height: auto;
+        .note {
             display: block;
-            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -4vw;
+            width: 40%;
             z-index: 99;
         }
+        
         ul{
             padding: 0;
         }
@@ -67,7 +85,7 @@
     <button class="back" onclick="window.history.back()">
         <img src="assets/backarrow.png"/>
     </button>
-    <img src="assets/fridgenote.png">
+    <img src="assets/fridgenote.png" class="note">
     <script src="script.js"></script>
 </body>
 </html>

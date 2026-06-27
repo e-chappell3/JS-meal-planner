@@ -266,7 +266,8 @@ function loadIngredients(){
 
 // sort list based on required list length (can show recipes w/ least ingredients required if none)
 function filterRecipes(){
-    let make = []
+    makeList.innerHTML = "";
+    let make = [];
     var ctr = 0;
     recList.forEach(item =>{
         let required = checkRecipe(item)

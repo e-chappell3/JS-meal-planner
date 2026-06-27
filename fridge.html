@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
 
     <style>
+        :root{
+            --brown: #D7CEC5;
+            --blue: #C7CCF5;
+            --cream: #F6F6EC;
+            --grey: #2E2D29;
+        }
+
+        html, body{
+            margin: 0;
+            width: auto;
+            height: auto;
+            overflow: hidden;
+        }
+
         body{
             background-image: url(assets/backkitchen.png);
             background-size: cover;
@@ -25,17 +39,59 @@
             font-style: normal;
         }
 
+        .container{
+            display: flex;
+            justify-content: center;
+            margin-top: -2vw
+        }
+
+        h1{
+            white-space: nowrap;
+            font-size: 4vw;
+        }
+
+        .region{
+            position: absolute;
+            left: 40%;
+            top: 50%;
+            height: 32vw;
+            width: 24vw;
+            transform: translate(-12vw, -16vw);
+            overflow: scroll;
+            z-index: 1;
+        }
+
+        .fridge {
+            display: block;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: -4vw;
+            width: 50%;
+            z-index: 99;
+        }
+
         .back{
             border: none;
             background: none;
         }
+
+        ul{
+            font-size: 1.5vw;
+        }
     </style>
 </head>
 <body>
-    <ul id="ownedList"></ul>
-    <button class="back" onclick="window.history.back()">
-        <img src="assets/backarrow.png"/>
-    </button>
+    <div class="container">
+        <button class="back" onclick="window.history.back()">
+            <img src="assets/backarrow.png"/>
+        </button>
+        <h1> What Ingredients do you Have?</h1>
+        <div class = "region">
+            <ul id="ownedList"></ul>
+        </div>
+    </div>
+    
+    <img src="assets/openfridge.png" class="fridge">
     <script src="script.js"></script>
 </body>
 </html>
