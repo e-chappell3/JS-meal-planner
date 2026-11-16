@@ -96,6 +96,17 @@
             background: none;
             box-shadow: none;
         }
+
+        .dropMenu{
+            /* style dropdown menu so hidden by default */
+            display: none;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropMenu{
+            /* show dropdown menu when hovering over button */
+            display: block;
+        }
     </style>
 </head>
 <body>    
@@ -105,6 +116,21 @@
             <!-- container for inputting ingredients -->
             <input type="text" id="ingredientName" placeholder="Add an Ingredient">
             <button id="add">Add</button>
+        </div>
+        <div class="dropdown">
+            <!-- container for dropdown menu -->
+             <!-- button to trigger dropdown -->
+            <button id="dropdownButton">Choose Catergory</button>
+            <!-- dropdown menu options -->
+            <div class="dropMenu">
+                <li>Meat</li>
+                <li>Dairy</li>
+                <li>Vegetables</li>
+                <li>Fruits</li>
+                <li>Pantry</li>
+                <li>Frozen</li>
+                <li>Other</li>
+            </div>
         </div>
         <!-- list of stored ingredients -->
         <ul id="ingredientList"></ul>

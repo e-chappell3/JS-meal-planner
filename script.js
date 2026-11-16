@@ -3,8 +3,13 @@ const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
+const dropDown = document.getElementById('dropdownButton');
+const dropMenu = document.getElementById('dropMenu');
+const categories = document.querySelectorAll('.dropMenu li');
 // working list for displayList before saving/retrieving from localStorage into/out of displayList
 const ingredList = [];
+// var to store most recently selected category from dropMenu (default = other)
+let selectedCategory = "Other";
 
 // turn html button, text input + ul elements into variables for use in script (recipe related)
 const recipeList = document.getElementById('recipeList');
@@ -29,6 +34,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (displayList || ownedList){
         // if either displayList or ownedList is present then working with ingredients and should load accordingly from localStorage
         loadIngredients();
+        // also know categoy selection is active so add event listener for category selection
+        categories.forEach(category => {
+            category.addEventListener('click', function(){
+                selectedCategory = this.textContent;
+                console.log("Selected category:", selectedCategory);
+                dropDown.textContent = "Selected: " + selectedCategory;
+            })
+        })
     }
     if (recipeList){
         // if instead recipeList is present then working with recipes and should load accordingly from localStorage
@@ -118,7 +131,8 @@ function createIngredElement (i, owned, d){
     const item = {
         text: i,
         own: owned,
-        id: d
+        id: d,
+        category: selectedCategory
     };
     // push to working list
     ingredList.push(item);
@@ -180,7 +194,7 @@ function createIngredElement (i, owned, d){
         checkbox.checked = item.own;
         
         ownedItem.appendChild(checkbox);
-        
+
         // append the li element to the ownedList ul
         ownedList.appendChild(ownedItem);
         for (i = 0; i < ownedList.children.length; i++){
@@ -369,7 +383,7 @@ function loadIngredients(){
     // for each item in list create li element for ul + append to working list using function where item exists
     ingredients.forEach(item => {
         if(item){
-            createIngredElement(item.text, item.own, item.id);
+            createIngredElement(item.text, item.own, item.id, item.category);
         }   
     });
 }
