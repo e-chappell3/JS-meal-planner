@@ -93,6 +93,22 @@
             /* style list of ingredients */
             font-size: 1.5vw;
         }
+
+        .dropMenu{
+            /* style dropdown menu so hidden by default */
+            display: none;
+            cursor: pointer;
+        }
+
+        .dropdown:hover .dropMenu{
+            /* show dropdown menu when hovering over button */
+            display: block;
+        }
+
+        .filterList{
+            /* hide by default as only used when a category is selected */
+            visibility: hidden;
+        }
     </style>
 </head>
 <body>
@@ -104,8 +120,25 @@
         <h1> What Ingredients do you Have?</h1>
         <div class = "region">
             <!-- nested container for ingredient list -->
+             <div class="dropdown">
+                <!-- container for dropdown menu -->
+                <!-- button to trigger dropdown -->
+                <button id="dropdownButton">Choose Catergory</button>
+                <!-- dropdown menu options -->
+                 <div class="dropMenu">
+                    <li>All</li>
+                    <li>Meat</li>
+                    <li>Dairy</li>
+                    <li>Vegetables</li>
+                    <li>Fruits</li>
+                    <li>Pantry</li>
+                    <li>Frozen</li>
+                    <li>Other</li>
+                </div>
+            </div>
              <!-- list of ingredients including if they are currently owned/not -->
             <ul id="ownedList"></ul>
+            <ul id="filterList"></ul>
         </div>
     </div>
     <!-- fridge image -->

@@ -3,6 +3,7 @@ const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
+const filterList = document.getElementById('filterList');
 const dropDown = document.getElementById('dropdownButton');
 const dropMenu = document.getElementById('dropMenu');
 const categories = document.querySelectorAll('.dropMenu li');
@@ -40,6 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 selectedCategory = this.textContent;
                 console.log("Selected category:", selectedCategory);
                 dropDown.textContent = "Selected: " + selectedCategory;
+
+                if (ownedList){
+                    // if ownedList present then filter by selected category
+                    filterIngredients();
+                }
             })
         })
     }
@@ -186,6 +192,7 @@ function createIngredElement (i, owned, d){
         // if ownedList is present then create li element for that ul
         const ownedItem = document.createElement('li');
         ownedItem.textContent = item.text;
+        ownedItem.category = item.category;
         
         // need checkbox instead of delete button to indicate if owned/not
         let checkbox = document.createElement('input');
@@ -618,4 +625,17 @@ function sortList(list){
             }
         }
     }
+}
+
+function filterIngredients(){
+    const ownedIngreds = ownedList.querySelectorAll("li");
+    ownedIngreds.forEach(item => {
+        if (selectedCategory == "All" || item.category == selectedCategory){
+            item.style.display = "list-item";
+        }
+        else{
+            item.style.display = "none";
+        }
+    })
+    
 }
