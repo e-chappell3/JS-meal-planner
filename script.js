@@ -3,14 +3,13 @@ const addButton = document.getElementById('add');
 const ingredientInput = document.getElementById('ingredientName');
 const displayList = document.getElementById('ingredientList');
 const ownedList = document.getElementById('ownedList');
-const filterList = document.getElementById('filterList');
 const dropDown = document.getElementById('dropdownButton');
 const dropMenu = document.getElementById('dropMenu');
 const categories = document.querySelectorAll('.dropMenu li');
 // working list for displayList before saving/retrieving from localStorage into/out of displayList
 const ingredList = [];
 // var to store most recently selected category from dropMenu (default = other)
-let selectedCategory = "Other";
+let selectedCategory = "";
 
 // turn html button, text input + ul elements into variables for use in script (recipe related)
 const recipeList = document.getElementById('recipeList');
@@ -628,12 +627,15 @@ function sortList(list){
 }
 
 function filterIngredients(){
+    // get all ownedList li elements and for each one...
     const ownedIngreds = ownedList.querySelectorAll("li");
     ownedIngreds.forEach(item => {
+        // check if category matches selected option or if category is all and if so display the item
         if (selectedCategory == "All" || item.category == selectedCategory){
             item.style.display = "list-item";
         }
         else{
+            // if not hide item from view
             item.style.display = "none";
         }
     })
