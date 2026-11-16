@@ -122,6 +122,7 @@ function createIngredElement (i, owned, d){
     };
     // push to working list
     ingredList.push(item);
+    ingredList.sort((a, b) => a.text.localeCompare(b.text));
 
     if(displayList){
         // if displayList is present then create li element for that ul
@@ -136,8 +137,23 @@ function createIngredElement (i, owned, d){
         deleteButton.className = 'deleteIngredient';
         
         ingredItem.appendChild(deleteButton);
-        // append the li element to the displayList ul
+
+        // append the li element to the displayList ul in order
         displayList.appendChild(ingredItem);
+        for (i = 0; i < (displayList.getElementsByTagName('li')).length; i++){
+            console.log("Comparing",ingredItem.textContent.toLowerCase(),"and",displayList.children[i].textContent.toLowerCase());
+            if(ingredItem.textContent.toLowerCase() < displayList.children[i].textContent.toLowerCase()){
+                displayList.insertBefore(ingredItem, displayList.children[i]);
+                console.log("Inserted",ingredItem.textContent.toLowerCase(),"before",displayList.children[i].textContent.toLowerCase());
+                break;
+            }
+            else if(i === displayList.children.length){
+                console.log("adding as last list element");
+                displayList.appendChild(ingredItem);
+            }
+        }
+        
+       
         // add event listener to the delete button for click event
         deleteButton.addEventListener('click', function(){
             // removes item from displayList ul
@@ -164,8 +180,18 @@ function createIngredElement (i, owned, d){
         checkbox.checked = item.own;
         
         ownedItem.appendChild(checkbox);
+        
         // append the li element to the ownedList ul
         ownedList.appendChild(ownedItem);
+        for (i = 0; i < ownedList.children.length; i++){
+            if(ownedItem.textContent.toLowerCase() < ownedList.children[i].textContent.toLowerCase()){
+                ownedList.insertBefore(ownedItem, ownedList.children[i]);
+                break;
+            }
+            else if(i === ownedList.children.length){
+                ownedList.appendChild(ownedItem);
+            }
+        }
         // add event listener to the checkbox for change event
         checkbox.addEventListener('change', function(){
             // adapt the working list based on the checkbox state (owned/not owned)
@@ -173,6 +199,8 @@ function createIngredElement (i, owned, d){
             if (index > -1){
                 ingredList[index].own = !ingredList[index].own;
             }
+            // sort list to find item's position before saving
+            sortList(ownedList);
             // ensure changes saved to localStorage
             saveIngredient();
         })
@@ -328,6 +356,8 @@ function createRecipe(n, i, d){
 
 function saveIngredient(){
     // stringify working list to save to localStorage
+    // sort list to find item's position before saving
+    // ingredList.sort((a, b) => a.text.localeCompare(b.text));
     console.log("Saving: ", ingredList);
     localStorage.setItem('ingredList', JSON.stringify(ingredList));
 }
@@ -550,4 +580,28 @@ function loadRecipes(){
             createRecipe(item.name, item.ingreds, item.id);
         }   
     });
+}
+
+function sortList(list){
+    // sorts given list of li elements alphabetically
+    swapped = true;
+    liItems = list.getElementsByTagName("li");
+    while (swapped){
+        console.log("Sorting list:",liItems,"of length:",liItems.length);
+        swapped = false;
+        for (i = 0; i < liItems.length -1; i++){
+            console.log("Comparing",liItems[i].innerHTML,"and",liItems[i+1].innerHTML);
+            // for length of liItems check if current item is greater than the one after it
+            if (liItems[i].innerHTML.toLowerCase() > liItems[i + 1].innerHTML.toLowerCase()){
+                // if so swap by inserting the next item before the current one
+                console.log("Swapping",liItems[i].innerHTML,"and",liItems[i + 1].innerHTML);
+                liItems[i].parentNode.insertBefore(liItems[i + 1], liItems[i]);
+                // set swapped to true so know to continue running
+                swapped = true;
+            }
+            else{
+                console.log("No swap needed for",liItems[i].innerHTML,"and",liItems[i + 1].innerHTML);
+            }
+        }
+    }
 }
