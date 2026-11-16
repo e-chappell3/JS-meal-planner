@@ -508,6 +508,7 @@ function saveEditedRec(){
     if (index <= -1){
         // if not found alert accordingly and return false to indicate failure to save
         alert("Recipe not found!");
+        alert(index +" - Recipe ID: "+rId);
         return false;
     }
     // if found update the recipe name and ingredients in display recipe lsit
