@@ -114,7 +114,7 @@ function addIngredient(){
     const i = ingredientInput.value;
     if (ingredientInput.value){
         // if a value is in input then create new li element for the ul
-        createIngredElement(i, false, 0);
+        createIngredElement(i, false, 0, selectedCategory);
         // reset the input to be empty for future use
         ingredientInput.value = '';
         // save the updated list to localStorage
@@ -127,7 +127,7 @@ function addIngredient(){
 
 }
 
-function createIngredElement (i, owned, d){
+function createIngredElement (i, owned, d, cat){
     if (d == 0){
         // if no id provided, calculate random new id
         d = Date.now() + Math.random();
@@ -137,7 +137,7 @@ function createIngredElement (i, owned, d){
         text: i,
         own: owned,
         id: d,
-        category: selectedCategory
+        category: cat
     };
     // push to working list
     ingredList.push(item);
